@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube AI Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-6">
+    <div class="max-w-3xl mx-auto bg-slate-800 p-6 rounded-xl shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center text-blue-400">YouTube Automated Dashboard</h1>
+        
+        <!-- Niche Selection -->
+        <div class="mb-4">
+            <label class="block mb-2 text-sm font-semibold">Select Your Niche:</label>
+            <select id="nicheSelect" class="w-full p-3 bg-slate-700 rounded border border-slate-600 focus:outline-none">
+                <option value="Tech">Tech</option>
+                <option value="Finance">Finance</option>
+                <option value="Motivation">Motivation</option>
+            </select>
+        </div>
+
+        <button onclick="fetchTopics()" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded font-bold transition">
+            Get Trending Topics
+        </button>
+
+        <!-- Topics Display Area -->
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">Select a Topic:</h2>
+            <div id="topicsList" class="space-y-2">
+                <!-- Dynamic topics will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchTopics() {
+            const niche = document.getElementById('nicheSelect').value;
+            const response = await fetch('/get_topics', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ niche: niche })
+            });
+            const data = await response.json();
+            const listDiv = document.getElementById('topicsList');
+            listDiv.innerHTML = '';
+            
+            data.topics.forEach(topic => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 bg-slate-700 hover:bg-slate-600 rounded border border-slate-600";
+                btn.innerText = topic;
+                btn.onclick = () => alert("Selected Topic: " + topic + "\n(Agle phase me yahan se script generate hogi!)");
+                listDiv.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
