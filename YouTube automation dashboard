@@ -1,7 +1,0 @@
-youtube_automation_dashboard/
-│
-├── app.py              # Python Backend (Flask)
-├── templates/
-│   └── index.html      # Frontend Web Page (UI)
-└── static/
-    └── style.css       # Design aur styling
